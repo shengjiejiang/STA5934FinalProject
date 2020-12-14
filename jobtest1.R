@@ -128,12 +128,12 @@ e_x <- rnorm(10000, 0, 1)
 e_y <- rnorm(10000, 0, 1)
 
 for (i in 1:10000){
-	U[i] <- e_u[i]
- 	indd <- which(genevar[i,] != "NA")
-	X[i] <- gamma[indd] %*% genevar[i,indd] + U[i] + e_x[i]
+	indd <- which(genevar[i,] != "NA")
 	ind_0.1 <- sample(indd, 3)
-	ind_0.2 <- sample(indd, 5)
-	ind_0.3 <- sample(indd, 8)
+	ind_0.2 <- c(ind_0.1, sample(indd, 2))
+	ind_0.3 <- c(ind_0.2, sample(indd, 3))
+	U[i] <- e_u[i]
+	X[i] <- gamma[indd] %*% genevar[i,indd] + U[i] + e_x[i]
 	Y11[i] <- alpha[ind_0.1] %*% genevar[i,ind_0.1] + U[i] + e_y[i]
 	Y12[i] <- alpha[ind_0.2] %*% genevar[i,ind_0.2] + U[i] + e_y[i]
 	Y13[i] <- alpha[ind_0.3] %*% genevar[i,ind_0.3] + U[i] + e_y[i]
@@ -151,22 +151,22 @@ for ( j in 1:25){
 	
 	fit2 <- lm(Y11[5001:10000] ~ genevar[5001:10000,j])
 	test2 <- summary(fit2)
-	 betaYG1[j] <- test2$coefficient[2,1]
-	 sebetaYG1[j] <- test2$coefficient[2,2]
+	betaYG1[j] <- test2$coefficient[2,1]
+	sebetaYG1[j] <- test2$coefficient[2,2]
 	
 	fit3 <- lm(Y12[5001:10000] ~ genevar[5001:10000,j])
-	 test3 <- summary(fit3)
+	test3 <- summary(fit3)
 	betaYG2[j] <- test3$coefficient[2,1]
 	sebetaYG2[j] <- test3$coefficient[2,2]
 	
 	fit4 <- lm(Y13[5001:10000] ~ genevar[5001:10000,j])
 	test4 <- summary(fit4)
-	 betaYG3[j] <- test4$coefficient[2,1]
+	betaYG3[j] <- test4$coefficient[2,1]
 	sebetaYG3[j] <- test4$coefficient[2,2]
 	
 	fit5 <- lm(Y21[5001:10000] ~ genevar[5001:10000,j])
-	 test5 <- summary(fit5)
-	 betaYG4[j] <- test5$coefficient[2,1]
+	test5 <- summary(fit5)
+	betaYG4[j] <- test5$coefficient[2,1]
 	sebetaYG4[j] <- test5$coefficient[2,2]
 	
 	fit6 <- lm(Y22[5001:10000] ~ genevar[5001:10000,j])
@@ -177,7 +177,7 @@ for ( j in 1:25){
 	fit7 <- lm(Y23[5001:10000] ~ genevar[5001:10000,j])
 	test7 <- summary(fit7)
 	betaYG6[j] <- test7$coefficient[2,1]
-	 sebetaYG6[j] <- test7$coefficient[2,2]
+	sebetaYG6[j] <- test7$coefficient[2,2]
 	 }
 
  betaIV1 = betaYG1/betaXG # ratio estimates
