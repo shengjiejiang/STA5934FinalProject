@@ -139,8 +139,8 @@ e_y <- rnorm(10000, 0, 1)
 for (i in 1:10000){
  	indd <- which(genevar[i,] != "NA")
 	ind_0.1 <- sample(indd, 3)
-	ind_0.2 <- sample(indd, 5)
-	ind_0.3 <- sample(indd, 8)
+	ind_0.2 <- c(ind_0.1, sample(indd, 2))
+	ind_0.3 <- c(ind_0.2, sample(indd, 3))
 	U1[i] <- phi[ind_0.1] %*% genevar[i, ind_0.1] + e_u[i]
 	X1[i] <- gamma[indd] %*% genevar[i,indd] + U1[i] + e_x[i]
 	U2[i] <- phi[ind_0.2] %*% genevar[i, ind_0.2] + e_u[i]
